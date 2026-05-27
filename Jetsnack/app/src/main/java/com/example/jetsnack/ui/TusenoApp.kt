@@ -43,38 +43,38 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navArgument
-import com.example.jetsnack.ui.components.JetsnackScaffold
-import com.example.jetsnack.ui.components.JetsnackSnackbar
-import com.example.jetsnack.ui.components.rememberJetsnackScaffoldState
+import com.example.jetsnack.ui.components.Scaffold
+import com.example.jetsnack.ui.components.ElementBar
+import com.example.jetsnack.ui.components.rememberScaffoldState
 import com.example.jetsnack.ui.home.HomeSections
-import com.example.jetsnack.ui.home.JetsnackBottomBar
+import com.example.jetsnack.ui.home.BottomBar
 import com.example.jetsnack.ui.home.addHomeGraph
 import com.example.jetsnack.ui.home.composableWithCompositionLocal
 import com.example.jetsnack.ui.navigation.MainDestinations
-import com.example.jetsnack.ui.navigation.rememberJetsnackNavController
+import com.example.jetsnack.ui.navigation.rememberNavController
 import com.example.jetsnack.ui.snackdetail.SnackDetail
 import com.example.jetsnack.ui.snackdetail.nonSpatialExpressiveSpring
 import com.example.jetsnack.ui.snackdetail.spatialExpressiveSpring
-import com.example.jetsnack.ui.theme.JetsnackTheme
+import com.example.jetsnack.ui.theme.Theme
 
 @Preview
 @Composable
-fun JetsnackApp() {
-    JetsnackTheme {
-        val jetsnackNavController = rememberJetsnackNavController()
+fun TusenoApp() {
+    Theme {
+        val appNavController = rememberNavController()
         SharedTransitionLayout {
             CompositionLocalProvider(
                 LocalSharedTransitionScope provides this,
             ) {
                 NavHost(
-                    navController = jetsnackNavController.navController,
+                    navController = appNavController.navController,
                     startDestination = MainDestinations.HOME_ROUTE,
                 ) {
                     composableWithCompositionLocal(
                         route = MainDestinations.HOME_ROUTE,
                     ) { backStackEntry ->
                         MainContainer(
-                            onSnackSelected = jetsnackNavController::navigateToSnackDetail,
+                            onElementSelected = appNavController::navigateToDetail,
                         )
                     }
 
@@ -95,7 +95,7 @@ fun JetsnackApp() {
                         SnackDetail(
                             snackId,
                             origin = origin ?: "",
-                            upPress = jetsnackNavController::upPress,
+                            upPress = appNavController::upPress,
                         )
                     }
                 }
@@ -105,22 +105,22 @@ fun JetsnackApp() {
 }
 
 @Composable
-fun MainContainer(modifier: Modifier = Modifier, onSnackSelected: (Long, String, NavBackStackEntry) -> Unit) {
-    val jetsnackScaffoldState = rememberJetsnackScaffoldState()
-    val nestedNavController = rememberJetsnackNavController()
+fun MainContainer(modifier: Modifier = Modifier, onElementSelected: (Long, String, NavBackStackEntry) -> Unit) {
+    val jetsnackScaffoldState = rememberScaffoldState()
+    val nestedNavController = rememberNavController()
     val navBackStackEntry by nestedNavController.navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
     val sharedTransitionScope = LocalSharedTransitionScope.current
         ?: throw IllegalStateException("No SharedElementScope found")
     val animatedVisibilityScope = LocalNavAnimatedVisibilityScope.current
         ?: throw IllegalStateException("No SharedElementScope found")
-    JetsnackScaffold(
+    Scaffold(
         bottomBar = {
             with(animatedVisibilityScope) {
                 with(sharedTransitionScope) {
-                    JetsnackBottomBar(
+                    BottomBar(
                         tabs = HomeSections.entries.toTypedArray(),
-                        currentRoute = currentRoute ?: HomeSections.FEED.route,
+                        currentRoute = currentRoute ?: HomeSections.EDITOR.route,
                         navigateToRoute = nestedNavController::navigateToBottomBarRoute,
                         modifier = Modifier
                             .renderInSharedTransitionScopeOverlay(
@@ -143,21 +143,21 @@ fun MainContainer(modifier: Modifier = Modifier, onSnackSelected: (Long, String,
             }
         },
         modifier = modifier,
-        snackbarHost = {
+        host = {
             SnackbarHost(
                 hostState = it,
                 modifier = Modifier.systemBarsPadding(),
-                snackbar = { snackbarData -> JetsnackSnackbar(snackbarData) },
+                snackbar = { elementData -> ElementBar(elementData) },
             )
         },
         snackBarHostState = jetsnackScaffoldState.snackBarHostState,
     ) { padding ->
         NavHost(
             navController = nestedNavController.navController,
-            startDestination = HomeSections.FEED.route,
+            startDestination = HomeSections.EDITOR.route,
         ) {
             addHomeGraph(
-                onSnackSelected = onSnackSelected,
+                onSnackSelected = onElementSelected,
                 modifier = Modifier
                     .padding(padding)
                     .consumeWindowInsets(padding),

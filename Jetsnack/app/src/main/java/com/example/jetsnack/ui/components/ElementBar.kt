@@ -30,7 +30,7 @@ import com.example.jetsnack.ui.theme.JetsnackTheme
  * [com.example.jetsnack.ui.theme.JetsnackColors]
  */
 @Composable
-fun JetsnackSnackbar(
+fun ElementBar(
     snackbarData: SnackbarData,
     modifier: Modifier = Modifier,
     actionOnNewLine: Boolean = false,

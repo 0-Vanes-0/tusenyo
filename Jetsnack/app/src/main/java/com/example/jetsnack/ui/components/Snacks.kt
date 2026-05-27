@@ -78,11 +78,12 @@ import com.example.jetsnack.model.SnackCollection
 import com.example.jetsnack.model.snacks
 import com.example.jetsnack.ui.LocalNavAnimatedVisibilityScope
 import com.example.jetsnack.ui.LocalSharedTransitionScope
-import com.example.jetsnack.ui.SnackSharedElementKey
-import com.example.jetsnack.ui.SnackSharedElementType
+import com.example.jetsnack.ui.SharedElementKey
+import com.example.jetsnack.ui.SharedElementType
 import com.example.jetsnack.ui.snackdetail.nonSpatialExpressiveSpring
 import com.example.jetsnack.ui.snackdetail.snackDetailBoundsTransform
 import com.example.jetsnack.ui.theme.JetsnackTheme
+import com.example.jetsnack.ui.theme.Theme
 
 private val HighlightCardWidth = 170.dp
 private val HighlightCardPadding = 16.dp
@@ -188,7 +189,7 @@ private fun Snacks(snackCollectionId: Long, snacks: List<Snack>, onSnackClick: (
 
 @Composable
 fun SnackItem(snack: Snack, snackCollectionId: Long, onSnackClick: (Long, String) -> Unit, modifier: Modifier = Modifier) {
-    JetsnackSurface(
+    Surface(
         shape = MaterialTheme.shapes.medium,
         modifier = modifier.padding(
             start = 4.dp,
@@ -219,10 +220,10 @@ fun SnackItem(snack: Snack, snackCollectionId: Long, onSnackClick: (Long, String
                         .size(120.dp)
                         .sharedBounds(
                             rememberSharedContentState(
-                                key = SnackSharedElementKey(
+                                key = SharedElementKey(
                                     snackId = snack.id,
                                     origin = snackCollectionId.toString(),
-                                    type = SnackSharedElementType.Image,
+                                    type = SharedElementType.Image,
                                 ),
                             ),
                             animatedVisibilityScope = animatedVisibilityScope,
@@ -238,10 +239,10 @@ fun SnackItem(snack: Snack, snackCollectionId: Long, onSnackClick: (Long, String
                         .wrapContentWidth()
                         .sharedBounds(
                             rememberSharedContentState(
-                                key = SnackSharedElementKey(
+                                key = SharedElementKey(
                                     snackId = snack.id,
                                     origin = snackCollectionId.toString(),
-                                    type = SnackSharedElementType.Title,
+                                    type = SharedElementType.Title,
                                 ),
                             ),
                             animatedVisibilityScope = animatedVisibilityScope,
@@ -286,10 +287,10 @@ private fun HighlightSnackItem(
                 .padding(bottom = 16.dp)
                 .sharedBounds(
                     sharedContentState = rememberSharedContentState(
-                        key = SnackSharedElementKey(
+                        key = SharedElementKey(
                             snackId = snack.id,
                             origin = snackCollectionId.toString(),
-                            type = SnackSharedElementType.Bounds,
+                            type = SharedElementType.Bounds,
                         ),
                     ),
                     animatedVisibilityScope = animatedVisibilityScope,
@@ -333,10 +334,10 @@ private fun HighlightSnackItem(
                         modifier = Modifier
                             .sharedBounds(
                                 rememberSharedContentState(
-                                    key = SnackSharedElementKey(
+                                    key = SharedElementKey(
                                         snackId = snack.id,
                                         origin = snackCollectionId.toString(),
-                                        type = SnackSharedElementType.Background,
+                                        type = SharedElementType.Background,
                                     ),
                                 ),
                                 animatedVisibilityScope = animatedVisibilityScope,
@@ -368,10 +369,10 @@ private fun HighlightSnackItem(
                         modifier = Modifier
                             .sharedBounds(
                                 rememberSharedContentState(
-                                    key = SnackSharedElementKey(
+                                    key = SharedElementKey(
                                         snackId = snack.id,
                                         origin = snackCollectionId.toString(),
-                                        type = SnackSharedElementType.Image,
+                                        type = SharedElementType.Image,
                                     ),
                                 ),
                                 animatedVisibilityScope = animatedVisibilityScope,
@@ -395,10 +396,10 @@ private fun HighlightSnackItem(
                         .padding(horizontal = 16.dp)
                         .sharedBounds(
                             rememberSharedContentState(
-                                key = SnackSharedElementKey(
+                                key = SharedElementKey(
                                     snackId = snack.id,
                                     origin = snackCollectionId.toString(),
-                                    type = SnackSharedElementType.Title,
+                                    type = SharedElementType.Title,
                                 ),
                             ),
                             animatedVisibilityScope = animatedVisibilityScope,
@@ -419,10 +420,10 @@ private fun HighlightSnackItem(
                         .padding(horizontal = 16.dp)
                         .sharedBounds(
                             rememberSharedContentState(
-                                key = SnackSharedElementKey(
+                                key = SharedElementKey(
                                     snackId = snack.id,
                                     origin = snackCollectionId.toString(),
-                                    type = SnackSharedElementType.Tagline,
+                                    type = SharedElementType.Tagline,
                                 ),
                             ),
                             animatedVisibilityScope = animatedVisibilityScope,
@@ -453,7 +454,7 @@ fun SnackImage(
     modifier: Modifier = Modifier,
     elevation: Dp = 0.dp,
 ) {
-    JetsnackSurface(
+    Surface(
         elevation = elevation,
         shape = CircleShape,
         modifier = modifier,
@@ -492,7 +493,7 @@ fun SnackCardPreview() {
 
 @Composable
 fun JetsnackPreviewWrapper(content: @Composable () -> Unit) {
-    JetsnackTheme {
+    Theme {
         SharedTransitionLayout {
             AnimatedVisibility(visible = true) {
                 CompositionLocalProvider(

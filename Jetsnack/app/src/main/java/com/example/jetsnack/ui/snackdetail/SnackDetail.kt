@@ -101,12 +101,12 @@ import com.example.jetsnack.model.SnackCollection
 import com.example.jetsnack.model.SnackRepo
 import com.example.jetsnack.ui.LocalNavAnimatedVisibilityScope
 import com.example.jetsnack.ui.LocalSharedTransitionScope
-import com.example.jetsnack.ui.SnackSharedElementKey
-import com.example.jetsnack.ui.SnackSharedElementType
-import com.example.jetsnack.ui.components.JetsnackButton
-import com.example.jetsnack.ui.components.JetsnackDivider
+import com.example.jetsnack.ui.SharedElementKey
+import com.example.jetsnack.ui.SharedElementType
+import com.example.jetsnack.ui.components.CustomButton
+import com.example.jetsnack.ui.components.Divider
 import com.example.jetsnack.ui.components.JetsnackPreviewWrapper
-import com.example.jetsnack.ui.components.JetsnackSurface
+import com.example.jetsnack.ui.components.Surface
 import com.example.jetsnack.ui.components.QuantitySelector
 import com.example.jetsnack.ui.components.SnackCollection
 import com.example.jetsnack.ui.components.SnackImage
@@ -163,10 +163,10 @@ fun SnackDetail(snackId: Long, origin: String, upPress: () -> Unit) {
                 .clip(RoundedCornerShape(roundedCornerAnim))
                 .sharedBounds(
                     rememberSharedContentState(
-                        key = SnackSharedElementKey(
+                        key = SharedElementKey(
                             snackId = snack.id,
                             origin = origin,
-                            type = SnackSharedElementType.Bounds,
+                            type = SharedElementType.Bounds,
                         ),
                     ),
                     animatedVisibilityScope,
@@ -217,10 +217,10 @@ private fun Header(snackId: Long, origin: String) {
             modifier = Modifier
                 .sharedBounds(
                     rememberSharedContentState(
-                        key = SnackSharedElementKey(
+                        key = SharedElementKey(
                             snackId = snackId,
                             origin = origin,
-                            type = SnackSharedElementType.Background,
+                            type = SharedElementType.Background,
                         ),
                     ),
                     animatedVisibilityScope = animatedVisibilityScope,
@@ -296,7 +296,7 @@ private fun Body(related: List<SnackCollection>, scroll: ScrollState) {
             ) {
                 Spacer(Modifier.height(GradientScroll))
                 Spacer(Modifier.height(ImageOverlap))
-                JetsnackSurface(
+                Surface(
                     Modifier
                         .fillMaxWidth()
                         .padding(top = 16.dp),
@@ -359,7 +359,7 @@ private fun Body(related: List<SnackCollection>, scroll: ScrollState) {
                         )
 
                         Spacer(Modifier.height(16.dp))
-                        JetsnackDivider()
+                        Divider()
 
                         related.forEach { snackCollection ->
                             key(snackCollection.id) {
@@ -416,10 +416,10 @@ private fun Title(snack: Snack, origin: String, scrollProvider: () -> Int) {
                 modifier = HzPadding
                     .sharedBounds(
                         rememberSharedContentState(
-                            key = SnackSharedElementKey(
+                            key = SharedElementKey(
                                 snackId = snack.id,
                                 origin = origin,
-                                type = SnackSharedElementType.Title,
+                                type = SharedElementType.Title,
                             ),
                         ),
                         animatedVisibilityScope = animatedVisibilityScope,
@@ -436,10 +436,10 @@ private fun Title(snack: Snack, origin: String, scrollProvider: () -> Int) {
                 modifier = HzPadding
                     .sharedBounds(
                         rememberSharedContentState(
-                            key = SnackSharedElementKey(
+                            key = SharedElementKey(
                                 snackId = snack.id,
                                 origin = origin,
-                                type = SnackSharedElementType.Tagline,
+                                type = SharedElementType.Tagline,
                             ),
                         ),
                         animatedVisibilityScope = animatedVisibilityScope,
@@ -462,7 +462,7 @@ private fun Title(snack: Snack, origin: String, scrollProvider: () -> Int) {
                 )
             }
             Spacer(Modifier.height(8.dp))
-            JetsnackDivider(modifier = Modifier)
+            Divider(modifier = Modifier)
         }
     }
 }
@@ -496,10 +496,10 @@ private fun Image(
                 modifier = Modifier
                     .sharedBounds(
                         rememberSharedContentState(
-                            key = SnackSharedElementKey(
+                            key = SharedElementKey(
                                 snackId = snackId,
                                 origin = origin,
-                                type = SnackSharedElementType.Image,
+                                type = SharedElementType.Image,
                             ),
                         ),
                         animatedVisibilityScope = animatedVisibilityScope,
@@ -553,7 +553,7 @@ private fun CartBottomBar(modifier: Modifier = Modifier) {
         LocalNavAnimatedVisibilityScope.current ?: throw IllegalStateException("No Shared scope")
     with(sharedTransitionScope) {
         with(animatedVisibilityScope) {
-            JetsnackSurface(
+            Surface(
                 modifier = modifier
                     .renderInSharedTransitionScopeOverlay(zIndexInOverlay = 4f)
                     .animateEnterExit(
@@ -568,7 +568,7 @@ private fun CartBottomBar(modifier: Modifier = Modifier) {
                     ),
             ) {
                 Column {
-                    JetsnackDivider()
+                    Divider()
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier
@@ -582,7 +582,7 @@ private fun CartBottomBar(modifier: Modifier = Modifier) {
                             increaseItemCount = { updateCount(count + 1) },
                         )
                         Spacer(Modifier.width(16.dp))
-                        JetsnackButton(
+                        CustomButton(
                             onClick = { /* todo */ },
                             modifier = Modifier.weight(1f),
                         ) {

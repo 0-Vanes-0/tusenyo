@@ -46,7 +46,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -71,17 +70,16 @@ import com.example.jetsnack.R
 import com.example.jetsnack.model.OrderLine
 import com.example.jetsnack.model.SnackCollection
 import com.example.jetsnack.model.SnackRepo
-import com.example.jetsnack.ui.components.JetsnackButton
-import com.example.jetsnack.ui.components.JetsnackDivider
-import com.example.jetsnack.ui.components.JetsnackSurface
+import com.example.jetsnack.ui.components.CustomButton
+import com.example.jetsnack.ui.components.Divider
 import com.example.jetsnack.ui.components.QuantitySelector
 import com.example.jetsnack.ui.components.SnackCollection
 import com.example.jetsnack.ui.components.SnackImage
-import com.example.jetsnack.ui.home.DestinationBar
 import com.example.jetsnack.ui.snackdetail.nonSpatialExpressiveSpring
 import com.example.jetsnack.ui.snackdetail.spatialExpressiveSpring
 import com.example.jetsnack.ui.theme.AlphaNearOpaque
 import com.example.jetsnack.ui.theme.JetsnackTheme
+import com.example.jetsnack.ui.theme.Theme
 import com.example.jetsnack.ui.utils.formatPrice
 import kotlin.math.roundToInt
 
@@ -114,7 +112,7 @@ fun Cart(
     onSnackClick: (Long, String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    JetsnackSurface(modifier = modifier.fillMaxSize()) {
+    com.example.jetsnack.ui.components.Surface(modifier = modifier.fillMaxSize()) {
         Box(modifier = Modifier.fillMaxSize()) {
             CartContent(
                 orderLines = orderLines,
@@ -125,7 +123,6 @@ fun Cart(
                 onSnackClick = onSnackClick,
                 modifier = Modifier.align(Alignment.TopCenter),
             )
-            DestinationBar(modifier = Modifier.align(Alignment.TopCenter))
             CheckoutBar(modifier = Modifier.align(Alignment.BottomCenter))
         }
     }
@@ -234,7 +231,7 @@ private fun SwipeDismissItemBackground(progress: Float) {
             Modifier
                 .fillMaxWidth(progress),
         ) {
-            Surface(
+            androidx.compose.material3.Surface(
                 modifier = Modifier
                     .padding(padding)
                     .fillMaxWidth()
@@ -264,7 +261,7 @@ private fun SwipeDismissItemBackground(progress: Float) {
                         )
                     }
                     /*Text opacity increases as the text is supposed to appear in
-                                    the screen*/
+                                            the screen*/
                     val textAlpha by animateFloatAsState(
                         if (progress > 0.5f) 1f else 0.5f, label = "text alpha",
                     )
@@ -366,7 +363,7 @@ fun CartItem(
                 }
             }
         }
-        JetsnackDivider()
+        Divider()
     }
 }
 
@@ -415,7 +412,7 @@ fun SummaryItem(subtotal: Long, shippingCosts: Long, modifier: Modifier = Modifi
             )
         }
         Spacer(modifier = Modifier.height(8.dp))
-        JetsnackDivider()
+        Divider()
         Row(modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp)) {
             Text(
                 text = stringResource(R.string.cart_total_label),
@@ -432,7 +429,7 @@ fun SummaryItem(subtotal: Long, shippingCosts: Long, modifier: Modifier = Modifi
                 modifier = Modifier.alignBy(LastBaseline),
             )
         }
-        JetsnackDivider()
+        Divider()
     }
 }
 
@@ -444,10 +441,10 @@ private fun CheckoutBar(modifier: Modifier = Modifier) {
         ),
     ) {
 
-        JetsnackDivider()
+        Divider()
         Row {
             Spacer(Modifier.weight(1f))
-            JetsnackButton(
+            CustomButton(
                 onClick = { /* todo */ },
                 shape = RectangleShape,
                 modifier = Modifier
@@ -470,7 +467,7 @@ private fun CheckoutBar(modifier: Modifier = Modifier) {
 @Preview("large font", fontScale = 2f)
 @Composable
 private fun CartPreview() {
-    JetsnackTheme {
+    Theme {
         Cart(
             orderLines = SnackRepo.getCart(),
             removeSnack = {},

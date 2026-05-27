@@ -54,6 +54,7 @@ import com.example.jetsnack.R
 import com.example.jetsnack.model.Filter
 import com.example.jetsnack.ui.FilterSharedElementKey
 import com.example.jetsnack.ui.theme.JetsnackTheme
+import com.example.jetsnack.ui.theme.Theme
 
 @Composable
 fun FilterBar(
@@ -116,7 +117,7 @@ fun FilterChip(filter: Filter, modifier: Modifier = Modifier, shape: Shape = Mat
         label = "text color",
     )
 
-    JetsnackSurface(
+    Surface(
         modifier = modifier,
         color = backgroundColor,
         contentColor = textColor,
@@ -165,7 +166,7 @@ fun FilterChip(filter: Filter, modifier: Modifier = Modifier, shape: Shape = Mat
 @Preview("large font", fontScale = 2f)
 @Composable
 private fun FilterDisabledPreview() {
-    JetsnackTheme {
+    Theme {
         FilterChip(Filter(name = "Demo", enabled = false), Modifier.padding(4.dp))
     }
 }
@@ -175,7 +176,7 @@ private fun FilterDisabledPreview() {
 @Preview("large font", fontScale = 2f)
 @Composable
 private fun FilterEnabledPreview() {
-    JetsnackTheme {
+    Theme {
         FilterChip(Filter(name = "Demo", enabled = true))
     }
 }

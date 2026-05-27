@@ -43,7 +43,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.jetsnack.R
 import com.example.jetsnack.ui.LocalNavAnimatedVisibilityScope
 import com.example.jetsnack.ui.LocalSharedTransitionScope
-import com.example.jetsnack.ui.components.JetsnackDivider
+import com.example.jetsnack.ui.components.Divider
 import com.example.jetsnack.ui.components.JetsnackPreviewWrapper
 import com.example.jetsnack.ui.snackdetail.spatialExpressiveSpring
 import com.example.jetsnack.ui.theme.AlphaNearOpaque
@@ -100,7 +100,7 @@ fun DestinationBar(modifier: Modifier = Modifier) {
                         titleContentColor = JetsnackTheme.colors.textSecondary,
                     ),
                 )
-                JetsnackDivider()
+                Divider()
             }
         }
     }

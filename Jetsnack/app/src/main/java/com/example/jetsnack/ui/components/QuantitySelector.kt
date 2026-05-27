@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.jetsnack.R
 import com.example.jetsnack.ui.theme.JetsnackTheme
+import com.example.jetsnack.ui.theme.Theme
 
 @Composable
 fun QuantitySelector(count: Int, decreaseItemCount: () -> Unit, increaseItemCount: () -> Unit, modifier: Modifier = Modifier) {
@@ -84,8 +85,8 @@ fun QuantitySelector(count: Int, decreaseItemCount: () -> Unit, increaseItemCoun
 @Preview("large font", fontScale = 2f)
 @Composable
 fun QuantitySelectorPreview() {
-    JetsnackTheme {
-        JetsnackSurface {
+    Theme {
+        Surface {
             QuantitySelector(1, {}, {})
         }
     }
@@ -94,8 +95,8 @@ fun QuantitySelectorPreview() {
 @Preview("RTL")
 @Composable
 fun QuantitySelectorPreviewRtl() {
-    JetsnackTheme {
-        JetsnackSurface {
+    Theme {
+        Surface {
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
                 QuantitySelector(1, {}, {})
             }

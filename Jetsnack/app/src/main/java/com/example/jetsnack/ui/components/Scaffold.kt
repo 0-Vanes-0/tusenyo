@@ -33,19 +33,20 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import com.example.jetsnack.model.SnackbarManager
 import com.example.jetsnack.ui.theme.JetsnackTheme
+import com.example.jetsnack.ui.theme.Theme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 /**
- * Wrap Material [androidx.compose.material3.Scaffold] and set [JetsnackTheme] colors.
+ * Wrap Material [androidx.compose.material3.Scaffold] and set [Theme] colors.
  */
 @Composable
-fun JetsnackScaffold(
+fun Scaffold(
     modifier: Modifier = Modifier,
     snackBarHostState: SnackbarHostState = remember { SnackbarHostState() },
     topBar: @Composable (() -> Unit) = {},
     bottomBar: @Composable (() -> Unit) = {},
-    snackbarHost: @Composable (SnackbarHostState) -> Unit = { SnackbarHost(it) },
+    host: @Composable (SnackbarHostState) -> Unit = { SnackbarHost(it) },
     floatingActionButton: @Composable (() -> Unit) = {},
     floatingActionButtonPosition: FabPosition = FabPosition.End,
     backgroundColor: Color = JetsnackTheme.colors.uiBackground,
@@ -57,7 +58,7 @@ fun JetsnackScaffold(
         topBar = topBar,
         bottomBar = bottomBar,
         snackbarHost = {
-            snackbarHost(snackBarHostState)
+            host(snackBarHostState)
         },
         floatingActionButton = floatingActionButton,
         floatingActionButtonPosition = floatingActionButtonPosition,
@@ -71,7 +72,7 @@ fun JetsnackScaffold(
  * Remember and creates an instance of [JetsnackScaffoldState]
  */
 @Composable
-fun rememberJetsnackScaffoldState(
+fun rememberScaffoldState(
     snackBarHostState: SnackbarHostState = remember { SnackbarHostState() },
     snackbarManager: SnackbarManager = SnackbarManager,
     resources: Resources = resources(),

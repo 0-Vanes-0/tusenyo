@@ -46,9 +46,10 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.jetsnack.ui.theme.JetsnackTheme
+import com.example.jetsnack.ui.theme.Theme
 
 @Composable
-fun JetsnackButton(
+fun CustomButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
@@ -62,7 +63,7 @@ fun JetsnackButton(
     contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
     content: @Composable RowScope.() -> Unit,
 ) {
-    JetsnackSurface(
+    Surface(
         shape = shape,
         color = Color.Transparent,
         contentColor = if (enabled) contentColor else disabledContentColor,
@@ -108,8 +109,8 @@ private val ButtonShape = RoundedCornerShape(percent = 50)
 @Preview("large font", "round", fontScale = 2f)
 @Composable
 private fun ButtonPreview() {
-    JetsnackTheme {
-        JetsnackButton(onClick = {}) {
+    Theme {
+        CustomButton(onClick = {}) {
             Text(text = "Demo")
         }
     }
@@ -120,8 +121,8 @@ private fun ButtonPreview() {
 @Preview("large font", "rectangle", fontScale = 2f)
 @Composable
 private fun RectangleButtonPreview() {
-    JetsnackTheme {
-        JetsnackButton(
+    Theme {
+        CustomButton(
             onClick = {}, shape = RectangleShape,
         ) {
             Text(text = "Demo")

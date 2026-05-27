@@ -38,7 +38,7 @@ class MainActivity : ComponentActivity() {
                 setWidgetPreviews()
             }
         }
-        setContent { JetsnackApp() }
+        setContent { TusenoApp() }
     }
 
     @RequiresApi(Build.VERSION_CODES.VANILLA_ICE_CREAM)

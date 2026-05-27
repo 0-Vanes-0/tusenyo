@@ -47,11 +47,12 @@ import androidx.compose.ui.unit.dp
 import com.example.jetsnack.R
 import com.example.jetsnack.model.Snack
 import com.example.jetsnack.model.snacks
-import com.example.jetsnack.ui.components.JetsnackButton
-import com.example.jetsnack.ui.components.JetsnackDivider
-import com.example.jetsnack.ui.components.JetsnackSurface
+import com.example.jetsnack.ui.components.CustomButton
+import com.example.jetsnack.ui.components.Divider
+import com.example.jetsnack.ui.components.Surface
 import com.example.jetsnack.ui.components.SnackImage
 import com.example.jetsnack.ui.theme.JetsnackTheme
+import com.example.jetsnack.ui.theme.Theme
 import com.example.jetsnack.ui.utils.formatPrice
 
 @Composable
@@ -80,7 +81,7 @@ private fun SearchResult(snack: Snack, onSnackClick: (Long, String) -> Unit, sho
             .padding(horizontal = 24.dp),
     ) {
         if (showDivider) {
-            JetsnackDivider(
+            Divider(
                 Modifier.align(Alignment.TopCenter),
             )
         }
@@ -115,7 +116,7 @@ private fun SearchResult(snack: Snack, onSnackClick: (Long, String) -> Unit, sho
                     color = JetsnackTheme.colors.textPrimary,
                 )
             }
-            JetsnackButton(
+            CustomButton(
                 onClick = { /* todo */ },
                 shape = CircleShape,
                 contentPadding = PaddingValues(0.dp),
@@ -165,8 +166,8 @@ fun NoResults(query: String, modifier: Modifier = Modifier) {
 @Preview("large font", fontScale = 2f)
 @Composable
 private fun SearchResultPreview() {
-    JetsnackTheme {
-        JetsnackSurface {
+    Theme {
+        Surface {
             SearchResult(
                 snack = snacks[0],
                 onSnackClick = { _, _ -> },

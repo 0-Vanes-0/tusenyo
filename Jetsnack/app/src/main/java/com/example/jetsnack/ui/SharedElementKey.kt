@@ -16,9 +16,9 @@
 
 package com.example.jetsnack.ui
 
-data class SnackSharedElementKey(val snackId: Long, val origin: String, val type: SnackSharedElementType)
+data class SharedElementKey(val snackId: Long, val origin: String, val type: SharedElementType)
 
-enum class SnackSharedElementType {
+enum class SharedElementType {
     Bounds,
     Image,
     Title,

@@ -28,9 +28,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.jetsnack.ui.theme.JetsnackTheme
+import com.example.jetsnack.ui.theme.Theme
 
 @Composable
-fun JetsnackDivider(
+fun Divider(
     modifier: Modifier = Modifier,
     color: Color = JetsnackTheme.colors.uiBorder.copy(alpha = DividerAlpha),
     thickness: Dp = 1.dp,
@@ -48,9 +49,9 @@ private const val DividerAlpha = 0.12f
 @Preview("dark theme", uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
 @Composable
 private fun DividerPreview() {
-    JetsnackTheme {
+    Theme {
         Box(Modifier.size(height = 10.dp, width = 100.dp)) {
-            JetsnackDivider(Modifier.align(Alignment.Center))
+            Divider(Modifier.align(Alignment.Center))
         }
     }
 }

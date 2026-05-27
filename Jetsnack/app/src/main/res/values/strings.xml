@@ -16,10 +16,10 @@
     <string name="label_back">Back</string>
 
     <!-- Home Tabs -->
-    <string name="home_feed">Home</string>
-    <string name="home_search">Search</string>
-    <string name="home_cart">My Cart</string>
     <string name="home_profile">Profile</string>
+    <string name="home_editor">Editor</string>
+    <string name="home_library">Library</string>
+    <string name="home_purchase">Purchase</string>
 
     <!-- Home -->
     <string name="label_filters">Filters</string>
@@ -84,5 +84,6 @@
     <string name="sample_no_data_text">No data</string>
     <string name="sample_add_button_text">Add</string>
     <string name="add_to_cart_content_description">Add to Shopping Cart</string>
+    <string name="title_activity_editor">Editor</string>
 
 </resources>

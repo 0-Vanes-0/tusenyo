@@ -36,7 +36,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.jetsnack.R
-import com.example.jetsnack.ui.theme.JetsnackTheme
+import com.example.jetsnack.ui.theme.Theme
 
 @Composable
 fun Profile(modifier: Modifier = Modifier) {
@@ -73,7 +73,7 @@ fun Profile(modifier: Modifier = Modifier) {
 @Preview("large font", fontScale = 2f)
 @Composable
 fun ProfilePreview() {
-    JetsnackTheme {
+    Theme {
         Profile()
     }
 }

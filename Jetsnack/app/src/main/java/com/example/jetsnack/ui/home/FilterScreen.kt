@@ -72,6 +72,7 @@ import com.example.jetsnack.model.SnackRepo
 import com.example.jetsnack.ui.FilterSharedElementKey
 import com.example.jetsnack.ui.components.FilterChip
 import com.example.jetsnack.ui.theme.JetsnackTheme
+import com.example.jetsnack.ui.theme.Theme
 
 @Composable
 fun FilterScreen(sharedTransitionScope: SharedTransitionScope, animatedVisibilityScope: AnimatedVisibilityScope, onDismiss: () -> Unit) {
@@ -307,7 +308,7 @@ fun SortOption(text: String, @DrawableRes icon: Int?, onClickOption: () -> Unit,
 @Preview("filter screen")
 @Composable
 fun FilterScreenPreview() {
-    JetsnackTheme {
+    Theme {
         SharedTransitionLayout {
             AnimatedVisibility(true) {
                 FilterScreen(

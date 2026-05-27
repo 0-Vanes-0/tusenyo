@@ -40,7 +40,7 @@ object MainDestinations {
  * Remembers and creates an instance of [JetsnackNavController]
  */
 @Composable
-fun rememberJetsnackNavController(navController: NavHostController = rememberNavController()): JetsnackNavController =
+fun rememberNavController(navController: NavHostController = rememberNavController()): JetsnackNavController =
     remember(navController) {
         JetsnackNavController(navController)
     }
@@ -73,7 +73,7 @@ class JetsnackNavController(val navController: NavHostController) {
         }
     }
 
-    fun navigateToSnackDetail(snackId: Long, origin: String, from: NavBackStackEntry) {
+    fun navigateToDetail(snackId: Long, origin: String, from: NavBackStackEntry) {
         // In order to discard duplicated navigation events, we check the Lifecycle
         if (from.lifecycleIsResumed()) {
             navController.navigate("${MainDestinations.SNACK_DETAIL_ROUTE}/$snackId?origin=$origin")

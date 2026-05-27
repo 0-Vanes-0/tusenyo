@@ -76,12 +76,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navDeepLink
 import com.example.jetsnack.R
 import com.example.jetsnack.ui.LocalNavAnimatedVisibilityScope
-import com.example.jetsnack.ui.components.JetsnackSurface
+import com.example.jetsnack.ui.components.Surface
 import com.example.jetsnack.ui.home.cart.Cart
 import com.example.jetsnack.ui.home.search.Search
 import com.example.jetsnack.ui.snackdetail.nonSpatialExpressiveSpring
 import com.example.jetsnack.ui.snackdetail.spatialExpressiveSpring
 import com.example.jetsnack.ui.theme.JetsnackTheme
+import com.example.jetsnack.ui.theme.Theme
 import java.util.Locale
 
 fun NavGraphBuilder.composableWithCompositionLocal(
@@ -126,15 +127,17 @@ fun NavGraphBuilder.composableWithCompositionLocal(
 }
 
 fun NavGraphBuilder.addHomeGraph(onSnackSelected: (Long, String, NavBackStackEntry) -> Unit, modifier: Modifier = Modifier) {
-    composable(HomeSections.FEED.route) { from ->
-        Feed(
-            onSnackClick = { id, origin -> onSnackSelected(id, origin, from) },
+    composable(HomeSections.PROFILE.route) {
+        Profile(modifier)
+    }
+    composable(HomeSections.EDITOR.route) { from ->
+        Search(
             modifier,
         )
     }
-    composable(HomeSections.SEARCH.route) { from ->
-        Search(
-            onSnackClick = { id, origin -> onSnackSelected(id, origin, from) },
+    composable(HomeSections.LIBRARY.route) { from ->
+        Feed(
+            onElementClick = { id, origin -> onSnackSelected(id, origin, from) },
             modifier,
         )
     }
@@ -149,20 +152,17 @@ fun NavGraphBuilder.addHomeGraph(onSnackSelected: (Long, String, NavBackStackEnt
             modifier,
         )
     }
-    composable(HomeSections.PROFILE.route) {
-        Profile(modifier)
-    }
 }
 
 enum class HomeSections(@StringRes val title: Int, @DrawableRes val icon: Int, val route: String) {
-    FEED(R.string.home_feed, R.drawable.ic_home, "home/feed"),
-    SEARCH(R.string.home_search, R.drawable.ic_search, "home/search"),
-    CART(R.string.home_cart, R.drawable.ic_shopping_cart, "home/cart"),
     PROFILE(R.string.home_profile, R.drawable.ic_account_circle, "home/profile"),
+    EDITOR(R.string.home_editor, R.drawable.ic_home, "home/feed"),
+    LIBRARY(R.string.home_library, R.drawable.ic_search, "home/search"),
+    CART(R.string.home_purchase, R.drawable.ic_shopping_cart, "home/cart"),
 }
 
 @Composable
-fun JetsnackBottomBar(
+fun BottomBar(
     tabs: Array<HomeSections>,
     currentRoute: String,
     navigateToRoute: (String) -> Unit,
@@ -173,7 +173,7 @@ fun JetsnackBottomBar(
     val routes = remember { tabs.map { it.route } }
     val currentSection = tabs.first { it.route == currentRoute }
 
-    JetsnackSurface(
+    Surface(
         modifier = modifier,
         color = color,
         contentColor = contentColor,
@@ -419,9 +419,9 @@ private val BottomNavigationItemPadding = Modifier.padding(horizontal = 16.dp, v
 
 @Preview
 @Composable
-private fun JetsnackBottomNavPreview() {
-    JetsnackTheme {
-        JetsnackBottomBar(
+private fun BottomNavPreview() {
+    Theme {
+        BottomBar(
             tabs = HomeSections.entries.toTypedArray(),
             currentRoute = "home/feed",
             navigateToRoute = { },

@@ -41,7 +41,7 @@ import kotlin.math.ln
  * [com.example.jetsnack.ui.theme.JetsnackColors]
  */
 @Composable
-fun JetsnackSurface(
+fun Surface(
     modifier: Modifier = Modifier,
     shape: Shape = RectangleShape,
     color: Color = JetsnackTheme.colors.uiBackground,

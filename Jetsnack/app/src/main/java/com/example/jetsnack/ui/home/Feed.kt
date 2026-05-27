@@ -46,19 +46,19 @@ import com.example.jetsnack.model.Filter
 import com.example.jetsnack.model.SnackCollection
 import com.example.jetsnack.model.SnackRepo
 import com.example.jetsnack.ui.components.FilterBar
-import com.example.jetsnack.ui.components.JetsnackDivider
-import com.example.jetsnack.ui.components.JetsnackSurface
+import com.example.jetsnack.ui.components.Divider
+import com.example.jetsnack.ui.components.Surface
 import com.example.jetsnack.ui.components.SnackCollection
-import com.example.jetsnack.ui.theme.JetsnackTheme
+import com.example.jetsnack.ui.theme.Theme
 
 @Composable
-fun Feed(onSnackClick: (Long, String) -> Unit, modifier: Modifier = Modifier) {
+fun Feed(onElementClick: (Long, String) -> Unit, modifier: Modifier = Modifier) {
     val snackCollections = remember { SnackRepo.getSnacks() }
     val filters = remember { SnackRepo.getFilters() }
     Feed(
         snackCollections,
         filters,
-        onSnackClick,
+        onElementClick,
         modifier,
     )
 }
@@ -70,7 +70,7 @@ private fun Feed(
     onSnackClick: (Long, String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    JetsnackSurface(modifier = modifier.fillMaxSize()) {
+    Surface(modifier = modifier.fillMaxSize()) {
         var filtersVisible by remember {
             mutableStateOf(false)
         }
@@ -86,7 +86,6 @@ private fun Feed(
                     sharedTransitionScope = this@SharedTransitionLayout,
                     onSnackClick = onSnackClick,
                 )
-                DestinationBar()
                 AnimatedVisibility(filtersVisible, enter = fadeIn(), exit = fadeOut()) {
                     FilterScreen(
                         animatedVisibilityScope = this@AnimatedVisibility,
@@ -124,7 +123,7 @@ private fun SnackCollectionList(
         }
         itemsIndexed(snackCollections) { index, snackCollection ->
             if (index > 0) {
-                JetsnackDivider(thickness = 2.dp)
+                Divider(thickness = 2.dp)
             }
 
             SnackCollection(
@@ -141,7 +140,7 @@ private fun SnackCollectionList(
 @Preview("large font", fontScale = 2f)
 @Composable
 fun HomePreview() {
-    JetsnackTheme {
-        Feed(onSnackClick = { _, _ -> })
+    Theme {
+        Feed(onElementClick = { _, _ -> })
     }
 }

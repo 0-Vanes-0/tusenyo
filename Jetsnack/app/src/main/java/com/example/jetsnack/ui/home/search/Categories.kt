@@ -48,6 +48,7 @@ import com.example.jetsnack.model.SearchCategoryCollection
 import com.example.jetsnack.ui.components.SnackImage
 import com.example.jetsnack.ui.components.VerticalGrid
 import com.example.jetsnack.ui.theme.JetsnackTheme
+import com.example.jetsnack.ui.theme.Theme
 import kotlin.math.max
 
 @Composable
@@ -148,7 +149,7 @@ private fun SearchCategory(category: SearchCategory, gradient: List<Color>, modi
 @Preview("large font", fontScale = 2f)
 @Composable
 private fun SearchCategoryPreview() {
-    JetsnackTheme {
+    Theme {
         SearchCategory(
             category = SearchCategory(
                 name = "Desserts",

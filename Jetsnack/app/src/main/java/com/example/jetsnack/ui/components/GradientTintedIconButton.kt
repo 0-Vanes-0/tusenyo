@@ -38,6 +38,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.jetsnack.R
 import com.example.jetsnack.ui.theme.JetsnackTheme
+import com.example.jetsnack.ui.theme.Theme
 
 @Composable
 fun JetsnackGradientTintedIconButton(
@@ -100,7 +101,7 @@ fun JetsnackGradientTintedIconButton(
 @Preview("dark theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun GradientTintedIconButtonPreview() {
-    JetsnackTheme {
+    Theme {
         JetsnackGradientTintedIconButton(
             iconResourceId = R.drawable.ic_add,
             onClick = {},
