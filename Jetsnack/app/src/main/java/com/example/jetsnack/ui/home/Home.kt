@@ -78,6 +78,7 @@ import com.example.jetsnack.R
 import com.example.jetsnack.ui.LocalNavAnimatedVisibilityScope
 import com.example.jetsnack.ui.components.Surface
 import com.example.jetsnack.ui.home.cart.Cart
+import com.example.jetsnack.ui.home.editor.Editor
 import com.example.jetsnack.ui.home.search.Search
 import com.example.jetsnack.ui.snackdetail.nonSpatialExpressiveSpring
 import com.example.jetsnack.ui.snackdetail.spatialExpressiveSpring
@@ -130,10 +131,8 @@ fun NavGraphBuilder.addHomeGraph(onSnackSelected: (Long, String, NavBackStackEnt
     composable(HomeSections.PROFILE.route) {
         Profile(modifier)
     }
-    composable(HomeSections.EDITOR.route) { from ->
-        Search(
-            modifier,
-        )
+    composable(HomeSections.EDITOR.route) {
+        Editor(modifier)
     }
     composable(HomeSections.LIBRARY.route) { from ->
         Feed(
