@@ -48,6 +48,8 @@ private val LightColorPalette = JetsnackColors(
     gradient2_3 = listOf(Lavender3, Rose2),
     tornado1 = listOf(Shadow4, Ocean3),
     isDark = false,
+    disabled = listOf(Neutral6, Neutral8),
+    enabled = listOf(Ocean5, Ocean11),
 )
 
 private val DarkColorPalette = JetsnackColors(
@@ -75,6 +77,8 @@ private val DarkColorPalette = JetsnackColors(
     gradient2_3 = listOf(Lavender3, Rose3),
     tornado1 = listOf(Shadow4, Ocean3),
     isDark = true,
+    disabled = listOf(Neutral3, Neutral8),
+    enabled = listOf(Ocean5, Ocean11),
 )
 
 @Composable
@@ -130,6 +134,8 @@ data class JetsnackColors(
     val error: Color,
     val notificationBadge: Color = error,
     val isDark: Boolean,
+    val enabled: List<Color>,
+    val disabled: List<Color>,
 )
 
 @Composable
