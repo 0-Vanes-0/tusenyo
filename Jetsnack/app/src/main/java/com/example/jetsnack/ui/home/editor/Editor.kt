@@ -31,18 +31,24 @@ import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TransformOrigin
+import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.layer.drawLayer
+import androidx.compose.ui.graphics.rememberGraphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
@@ -53,6 +59,8 @@ import androidx.compose.ui.zIndex
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.example.jetsnack.R
+import com.example.jetsnack.ui.components.CustomButton
+import kotlinx.coroutines.launch
 
 private enum class EditorLayerType {
     Image,
@@ -74,6 +82,9 @@ private data class EditorLayer(
 fun Editor(modifier: Modifier = Modifier) {
     val focusManager = LocalFocusManager.current
     val density = LocalDensity.current
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+    val graphicsLayer = rememberGraphicsLayer()
 
     val layers = remember { mutableStateListOf<EditorLayer>() }
     var nextLayerId by remember { mutableLongStateOf(1L) }
@@ -114,7 +125,7 @@ fun Editor(modifier: Modifier = Modifier) {
             EditorLayer(
                 id = id,
                 type = EditorLayerType.Text,
-                text = "Tap para editar",
+                text = "Lorem ipsum",
                 offset = initialLayerOffset,
                 isEditingText = true
             )
@@ -175,6 +186,12 @@ fun Editor(modifier: Modifier = Modifier) {
                     color = Color(0xFFE0E0E0),
                     shape = RoundedCornerShape(18.dp)
                 )
+                .drawWithContent {
+                    graphicsLayer.record {
+                        this@drawWithContent.drawContent()
+                    }
+                    drawLayer(graphicsLayer)
+                }
         ) {
             Image(
                 painter = painterResource(id = R.drawable.tshirt),
@@ -217,15 +234,6 @@ fun Editor(modifier: Modifier = Modifier) {
                     )
                 }
             }
-
-            Text(
-                text = "Tap para elegir. Drag para mover.",
-                color = Color.White.copy(alpha = 0.75f),
-                fontSize = 16.sp,
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .padding(12.dp)
-            )
         }
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -247,6 +255,22 @@ fun Editor(modifier: Modifier = Modifier) {
             onFinishTextEditing = { finishTextEditing() },
             onClothesTypeSelected = { selectedClothesType = it },
         )
+
+        Spacer(modifier = Modifier.height(32.dp))
+
+        CustomButton(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(48.dp),
+            onClick = {
+                scope.launch {
+                    val bitmap = graphicsLayer.toImageBitmap().asAndroidBitmap()
+                    DesignStorage.saveDesign(context, bitmap)
+                }
+            }
+        ) {
+            Text(text = "Guardar diseno")
+        }
     }
 }
 
@@ -328,7 +352,7 @@ private fun BoxScope.EditorLayerView(
                 } else {
                     Text(
                         text = layer.text,
-                        color = Color.White,
+                        color = Color.Black,
                         fontSize = 30.sp
                     )
                 }

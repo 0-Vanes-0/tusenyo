@@ -157,6 +157,7 @@ fun MainContainer(modifier: Modifier = Modifier, onElementSelected: (Long, Strin
             startDestination = HomeSections.EDITOR.route,
         ) {
             addHomeGraph(
+                navController = nestedNavController.navController,
                 onSnackSelected = onElementSelected,
                 modifier = Modifier
                     .padding(padding)

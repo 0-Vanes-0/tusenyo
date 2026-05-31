@@ -72,6 +72,7 @@ import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDeepLink
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navDeepLink
 import com.example.jetsnack.R
@@ -127,9 +128,24 @@ fun NavGraphBuilder.composableWithCompositionLocal(
     }
 }
 
-fun NavGraphBuilder.addHomeGraph(onSnackSelected: (Long, String, NavBackStackEntry) -> Unit, modifier: Modifier = Modifier) {
+fun NavGraphBuilder.addHomeGraph(
+    navController: NavHostController,
+    onSnackSelected: (Long, String, NavBackStackEntry) -> Unit,
+    modifier: Modifier = Modifier
+) {
     composable(HomeSections.PROFILE.route) {
-        Profile(modifier)
+        Profile(
+            modifier = modifier,
+            onMyDesignsClick = {
+                navController.navigate("home/profile/designs")
+            }
+        )
+    }
+    composable("home/profile/designs") {
+        MyDesigns(
+            onBackClick = { navController.popBackStack() },
+            modifier = modifier
+        )
     }
     composable(HomeSections.EDITOR.route) {
         Editor(modifier)
@@ -170,7 +186,9 @@ fun BottomBar(
     contentColor: Color = JetsnackTheme.colors.iconInteractive,
 ) {
     val routes = remember { tabs.map { it.route } }
-    val currentSection = tabs.first { it.route == currentRoute }
+    val currentSection = tabs.find { it.route == currentRoute }
+        ?: tabs.find { currentRoute.startsWith(it.route) }
+        ?: HomeSections.EDITOR
 
     Surface(
         modifier = modifier,
